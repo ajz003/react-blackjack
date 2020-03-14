@@ -15,6 +15,7 @@ var Deck = /** @class */ (function () {
         this.cards = this.makeDeck();
     }
     Deck.prototype.makeDeck = function () {
+        var cards = [];
         for (var i = 0; i < Deck.suits.length; i++) {
             for (var j = 0; j < Deck.cardTypes.length; j++) {
                 var value = Deck.cardTypes[j];
@@ -32,10 +33,10 @@ var Deck = /** @class */ (function () {
                     numValue = parseInt(Deck.cardTypes[j]);
                 }
                 name_1 = value + " of " + Deck.suits[i];
-                this.cards.push(new Card(Deck.suits[i], numValue, name_1));
+                cards.push(new Card(Deck.suits[i], numValue, name_1));
             }
         }
-        return this.cards;
+        return cards;
     };
     Deck.prototype.presentDeck = function () {
         console.log(this.cards);
@@ -44,5 +45,42 @@ var Deck = /** @class */ (function () {
     Deck.cardTypes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"];
     return Deck;
 }());
+var Shoe = /** @class */ (function () {
+    function Shoe(numberOfDecks) {
+        this.cards = [];
+        this.numberOfDecks = numberOfDecks;
+        this.cards = this.makeShoe();
+    }
+    Shoe.prototype.makeShoe = function () {
+        var cards = [];
+        for (var i = 0; i < this.numberOfDecks; i++) {
+            var deck_1 = new Deck();
+            for (var j = 0; j < deck_1.cards.length; j++) {
+                cards.push(deck_1.cards[j]);
+            }
+        }
+        return cards;
+    };
+    Shoe.prototype.shuffleCards = function (cards) {
+        if (cards === void 0) { cards = this.cards; }
+        var j, x, i;
+        for (i = cards.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = cards[i];
+            cards[i] = cards[j];
+            cards[j] = x;
+        }
+        return cards;
+    };
+    Shoe.prototype.presentShoe = function () {
+        console.log(this.cards);
+    };
+    return Shoe;
+}());
 var deck = new Deck;
-deck.presentDeck();
+var shoe = new Shoe(2);
+// deck.presentDeck();
+// deck.shuffleDeck();
+// deck.presentDeck();
+shoe.shuffleCards();
+shoe.presentShoe();

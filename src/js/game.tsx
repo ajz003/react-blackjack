@@ -17,6 +17,7 @@ class Deck {
     static cardTypes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
     cards: Card[] = [];
     makeDeck() {
+        let cards: Card[] = [];
         for (let i = 0; i < Deck.suits.length; i++) {
             for (let j = 0; j < Deck.cardTypes.length; j++) {
                 let value = Deck.cardTypes[j];
@@ -37,10 +38,10 @@ class Deck {
 
                 name = `${value} of ${Deck.suits[i]}`
 
-                this.cards.push(new Card(Deck.suits[i], numValue, name))
+                cards.push(new Card(Deck.suits[i], numValue, name))
             }
         }
-        return this.cards;
+        return cards;
     }
     constructor() {
         this.cards = this.makeDeck()
@@ -50,6 +51,43 @@ class Deck {
     }
 }
 
-let deck = new Deck
+class Shoe {
+    numberOfDecks: number;
+    cards: Card[] = [];
+    constructor(numberOfDecks: number) {
+        this.numberOfDecks = numberOfDecks
+        this.cards = this.makeShoe()
+    }
+    makeShoe() {
+        let cards: Card[] = [];
+        for (let i = 0; i < this.numberOfDecks; i++) {
+            let deck = new Deck();
+            for (let j = 0; j < deck.cards.length; j++) {
+                cards.push(deck.cards[j])
+            }
+        }
+        return cards;
+    }
+    shuffleCards(cards: Card[] = this.cards) {
+        var j, x, i;
+        for (i = cards.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = cards[i];
+            cards[i] = cards[j];
+            cards[j] = x;
+        }
+        return cards;
+    }
+    presentShoe() {
+        console.log(this.cards)
+    }
+}
 
-deck.presentDeck();
+let deck = new Deck
+let shoe = new Shoe(2)
+
+// deck.presentDeck();
+// deck.shuffleDeck();
+// deck.presentDeck();
+shoe.shuffleCards();
+shoe.presentShoe();
