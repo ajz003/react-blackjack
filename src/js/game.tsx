@@ -82,7 +82,11 @@ class Shoe {
         console.log(this.cards)
     }
     dealCard() {
-        return this.cards.pop();
+        if (this.cards && this.cards.length > 0) {
+            return this.cards.pop()!;
+        } else {
+            throw new Error("No cards left.")
+        }
     }
 }
 
@@ -96,13 +100,10 @@ class Hand {
     }
 }
 
-let deck = new Deck
-let shoe = new Shoe(2)
-let player = new Hand()
+let deck = new Deck();
+let shoe = new Shoe(2);
+let player = new Hand();
 
-// deck.presentDeck();
-// deck.shuffleDeck();
-// deck.presentDeck();
 shoe.shuffleCards();
 player.receiveCard(shoe.dealCard());
 player.receiveCard(shoe.dealCard());

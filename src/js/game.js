@@ -76,7 +76,12 @@ var Shoe = /** @class */ (function () {
         console.log(this.cards);
     };
     Shoe.prototype.dealCard = function () {
-        return this.cards.pop();
+        if (this.cards && this.cards.length > 0) {
+            return this.cards.pop();
+        }
+        else {
+            throw new Error("No cards left.");
+        }
     };
     return Shoe;
 }());
@@ -96,12 +101,9 @@ var Hand = /** @class */ (function () {
     });
     return Hand;
 }());
-var deck = new Deck;
+var deck = new Deck();
 var shoe = new Shoe(2);
 var player = new Hand();
-// deck.presentDeck();
-// deck.shuffleDeck();
-// deck.presentDeck();
 shoe.shuffleCards();
 player.receiveCard(shoe.dealCard());
 player.receiveCard(shoe.dealCard());
