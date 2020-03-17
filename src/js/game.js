@@ -75,12 +75,34 @@ var Shoe = /** @class */ (function () {
     Shoe.prototype.presentShoe = function () {
         console.log(this.cards);
     };
+    Shoe.prototype.dealCard = function () {
+        return this.cards.pop();
+    };
     return Shoe;
+}());
+var Hand = /** @class */ (function () {
+    function Hand() {
+        this._cards = [];
+    }
+    Hand.prototype.receiveCard = function (card) {
+        this.cards.push(card);
+    };
+    Object.defineProperty(Hand.prototype, "cards", {
+        get: function () {
+            return this._cards;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Hand;
 }());
 var deck = new Deck;
 var shoe = new Shoe(2);
+var player = new Hand();
 // deck.presentDeck();
 // deck.shuffleDeck();
 // deck.presentDeck();
 shoe.shuffleCards();
-shoe.presentShoe();
+player.receiveCard(shoe.dealCard());
+player.receiveCard(shoe.dealCard());
+console.log(player.cards);

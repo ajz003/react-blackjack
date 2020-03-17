@@ -81,13 +81,29 @@ class Shoe {
     presentShoe() {
         console.log(this.cards)
     }
+    dealCard() {
+        return this.cards.pop();
+    }
+}
+
+class Hand {
+    private _cards: Card[] = [];
+    receiveCard(card: Card) {
+        this.cards.push(card);
+    }
+    get cards(): Card[] {
+        return this._cards
+    }
 }
 
 let deck = new Deck
 let shoe = new Shoe(2)
+let player = new Hand()
 
 // deck.presentDeck();
 // deck.shuffleDeck();
 // deck.presentDeck();
 shoe.shuffleCards();
-shoe.presentShoe();
+player.receiveCard(shoe.dealCard());
+player.receiveCard(shoe.dealCard());
+console.log(player.cards)
